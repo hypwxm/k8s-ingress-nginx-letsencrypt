@@ -1,0 +1,18 @@
+apiVersion: certmanager.k8s.io/v1alpha1   
+kind: Certificate  
+metadata:   
+  name: nginx-ingress-certs   
+  namespace: default 
+spec:   
+  secretName: nginx-ingress-certs  
+  issuerRef:  
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  dnsNames:
+  - zhh.msudn.com   
+  # commonName: zhh.msudn.com     
+  acme:   
+    config:  
+    - ingressClass: nginx
+      domains:  
+      - zhh.msudn.com

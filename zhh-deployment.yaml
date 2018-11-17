@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zhh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zhh-service
+  template:
+    metadata:
+      labels:
+        app: zhh-service
+    spec:
+      containers:
+      - name: zhh-service
+        image: hypwxm/zhh_api:1.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000

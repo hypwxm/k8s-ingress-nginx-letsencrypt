@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: zhh-ingress
+  namespace: default
+  annotations:  # 对单独ingress有效
+    nginx.ingress.kubernetes.io/limit-connections: "10"   # 限制并发请求输
+    nginx.ingress.kubernetes.io/limit-rps: "20"   # 限制一个ip的每秒请求输
+    nginx.ingress.kubernetes.io/proxy-body-size: "8m"   # client_max_body_size
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-production
+    #kubernetes.io/tls-acme: "true"
+# data:  写在data里面的规则将会覆盖全局的默认配置
+spec:
+  rules:
+  - host: zhh.msudn.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: zhh-gateway
+          servicePort: 80
+  tls:
+  - secretName: nginx-ingress-certs
+    hosts:
+    - zhh.msudn.com
+
